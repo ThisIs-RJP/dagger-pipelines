@@ -1,0 +1,31 @@
+# Place this file at .github/workflows/pipeline.yml in dagger-pipelines-demo.
+# Update PIPELINES_OWNER to the GitHub user/org that owns dagger-pipelines.
+
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - staging
+      - 'release/**'
+      - 'hotfix/**'
+  pull_request:
+
+env:
+  PIPELINES_OWNER: thisis-rjp
+  DAGGER_VERSION: "0.20.6"
+
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dagger CLI
+        run: curl -fsSL https://dl.dagger.io/dagger/install.sh | BIN_DIR=/usr/local/bin DAGGER_VERSION=${{ env.DAGGER_VERSION }} sh
+
+      - name: Echo context
+        run: dagger call -m "github.com/${{ env.PIPELINES_OWNER }}/dagger-pipelines@main" echo-context --repo-name="dagger-pipeline-demo" --branch="${{ github.ref_name }}"

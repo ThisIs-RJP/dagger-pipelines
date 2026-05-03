@@ -1,0 +1,6 @@
+# Centralised pipeline — lives in dagger-pipelines.
+# Any repo can download and upload this file to run these steps in their own build.
+
+steps:
+  - label: ":speech_balloon: Echo context"
+    command: echo "repo=$$BUILDKITE_PIPELINE_SLUG branch=$$BUILDKITE_BRANCH FROM MAIN CENTRALISED"

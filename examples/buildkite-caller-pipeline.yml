@@ -1,0 +1,7 @@
+# Place this file at .buildkite/pipeline.yml in dagger-pipelines-demo.
+# It downloads the centralised pipeline from dagger-pipelines and runs it in this build.
+
+steps:
+  - label: ":pipeline: Load central pipeline"
+    command: |
+      curl -fsSL https://raw.githubusercontent.com/thisis-rjp/dagger-pipelines/main/.buildkite/pipeline.yml | buildkite-agent pipeline upload
